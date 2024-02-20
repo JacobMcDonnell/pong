@@ -1,15 +1,15 @@
 #include "pong.h"
 #include "screen.h"
 
-inline void UpdatePosition ( point_t * const position, const point_t velocity ) {
+inline void UpdatePosition ( vector_t * const position, const vector_t velocity ) {
     position->x += velocity.x ;
     position->y += velocity.y ;
 }
 
 /* CheckMoveableCollision: Implementation of AABB collision for moveable objects */
 bool CheckMoveableCollision ( const struct moveable_t m1, const struct moveable_t m2 ) {
-    const point_t m1p = m1.position;
-    const point_t m2p = m2.position;
+    const vector_t m1p = m1.position;
+    const vector_t m2p = m2.position;
     const bool checkX = m1p.x + m1.width > m2p.x,
                 checkY = m1p.y + m1.height > m2p.y && m1p.y < m2p.y + m2.height;
     return checkX && checkY;
@@ -32,6 +32,6 @@ bool CheckCeilingCollision ( const struct moveable_t m ) {
 }
 
 void Reset ( ball_t * const ball ) {
-    ball->position = ( point_t ) { SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1 };
-    ball->velocity = ( point_t ){ 1, 1 };
+    ball->position = ( vector_t ) { SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1 };
+    ball->velocity = ( vector_t ){ 1, 1 };
 }

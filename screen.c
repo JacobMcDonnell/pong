@@ -6,7 +6,9 @@ SDL_Surface *ballSurface = NULL;
 SDL_Surface *leftPaddleSurface = NULL;
 SDL_Surface *rightPaddleSurface = NULL;
 
-static SDL_Surface *LoadSurface( const char * const path ) {
+static const char * const SPRITE_PATH = "sprite.bmp";
+
+static SDL_Surface *LoadSurface ( const char * const path ) {
     SDL_Surface *optimizedSurface = NULL;
     SDL_Surface * loadedSurface = SDL_LoadBMP( path );
     if ( loadedSurface == NULL ) {
@@ -37,9 +39,9 @@ bool InitScreen ( void ) {
 
     SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 0x00, 0x00, 0x00 ) );
 
-    ballSurface = LoadSurface( "ball.bmp" );
-    leftPaddleSurface = LoadSurface( "paddle.bmp" );
-    rightPaddleSurface = LoadSurface( "paddle.bmp" );
+    ballSurface = LoadSurface( SPRITE_PATH );
+    leftPaddleSurface = LoadSurface( SPRITE_PATH );
+    rightPaddleSurface = LoadSurface( SPRITE_PATH );
 
     return true;
 }
@@ -60,7 +62,7 @@ void Close ( void ) {
 
 void Draw ( const struct moveable_t m, SDL_Surface * const surface ) {
     SDL_Rect drect = { m.position.x, m.position.y, m.width, m.height };
-    const int status = SDL_BlitSurface( surface, NULL, gScreenSurface, &drect );
+    const int status = SDL_BlitScaled( surface, NULL, gScreenSurface, &drect );
     if ( status < 0 ) {
         printf( "Error with draw! SDL Error: %s\n", SDL_GetError() );
     }

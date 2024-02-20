@@ -1,7 +1,6 @@
 #include "pong.h"
 #include "screen.h"
 #include <time.h>
-#include <math.h>
 
 static uint8_t delay = 5;
 static uint8_t rightScore = 0;
@@ -13,10 +12,18 @@ void Delay ( const uint8_t seconds ) {
         ;
 }
 
+static inline void Update ( const paddle_t rightPaddle, const paddle_t leftPaddle, const ball_t ball ) {
+    SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 0x00, 0x00, 0x00 ) );
+    Draw ( rightPaddle, rightPaddleSurface );
+    Draw ( leftPaddle, leftPaddleSurface );
+    Draw( ball, ballSurface );
+    SDL_UpdateWindowSurface( gWindow );
+}
+
 int main ( void ) {
-    paddle_t leftPaddle = { { 0, 0 }, { 0, 0 }, 16, 48 },
-                rightPaddle = { { SCREEN_WIDTH - 16, 0 }, { 0, 0 }, 16, 48 };
-    ball_t ball = { { SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1 }, { 1, 1 }, 16, 16 };
+    paddle_t leftPaddle = { { 0, 0 }, { 0, 0 }, PADDLE_WIDTH, PADDLE_HEIGHT },
+                rightPaddle = { { SCREEN_WIDTH - 16, 0 }, { 0, 0 }, PADDLE_WIDTH, PADDLE_HEIGHT };
+    ball_t ball = { { SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1 }, { 1, 1 }, BALL_WIDTH, BALL_HEIGHT };
     bool quit = false;
     SDL_Event e;
     uint8_t volley = 0;
@@ -116,12 +123,9 @@ int main ( void ) {
                         break;
                 }
             }
+            Update( rightPaddle, leftPaddle, ball );
         }
-        SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 0x00, 0x00, 0x00 ) );
-        Draw ( rightPaddle, rightPaddleSurface );
-        Draw ( leftPaddle, leftPaddleSurface );
-        Draw( ball, ballSurface );
-        SDL_UpdateWindowSurface( gWindow );
+        Update( rightPaddle, leftPaddle, ball );
         Delay( delay );
     }
     Close();
