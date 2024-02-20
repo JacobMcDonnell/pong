@@ -33,4 +33,5 @@ bool CheckCeilingCollision ( const struct moveable_t m ) {
 
 void Reset ( ball_t * const ball ) {
     ball->position = ( point_t ) { SCREEN_WIDTH >> 1, SCREEN_HEIGHT >> 1 };
+    ball->velocity = ( point_t ){ 1, 1 };
 }

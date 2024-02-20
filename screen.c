@@ -35,7 +35,7 @@ bool InitScreen ( void ) {
     }
     gScreenSurface = SDL_GetWindowSurface( gWindow );
 
-    ClearScreen();
+    SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 0x00, 0x00, 0x00 ) );
 
     ballSurface = LoadSurface( "ball.bmp" );
     leftPaddleSurface = LoadSurface( "paddle.bmp" );
@@ -64,9 +64,4 @@ void Draw ( const struct moveable_t m, SDL_Surface * const surface ) {
     if ( status < 0 ) {
         printf( "Error with draw! SDL Error: %s\n", SDL_GetError() );
     }
-}
-
-void ClearScreen( void ) {
-    SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 0x00, 0x00, 0x00 ) );
-    SDL_UpdateWindowSurface( gWindow );
 }

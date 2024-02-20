@@ -15,6 +15,5 @@ extern SDL_Surface *rightPaddleSurface;
 bool InitScreen ( void );
 void Close ( void );
 void Draw ( const struct moveable_t m, SDL_Surface * const surface );
-void ClearScreen( void );
 
 #endif //SCREEN_H

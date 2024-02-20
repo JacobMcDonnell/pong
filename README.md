@@ -6,5 +6,4 @@ with SDL.
 
 - Add score count to the screen
 
-- Fix screen flicker
-  - Most likely due to the way sprites are rendered on the screen
+- Fix collision glitch on ball and paddles
